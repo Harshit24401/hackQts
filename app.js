@@ -31,7 +31,7 @@ app.post("/submit", (req,res) => {
 
 
 app.get("/", (req,res) => {
-    res.render(__dirname + "/views/login.ejs");
+    res.render(__dirname + "/views/home.ejs");
 });
 
 app.get("/about", (req,res) => {

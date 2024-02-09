@@ -1,0 +1,22 @@
+body{
+    background-color:antiquewhite;
+}
+
+.button1{
+    background-color: green;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    color: white;
+    border: solid white;
+    width: 100px;
+    height: 30px;
+}
+
+.button2{
+    background-color: white;
+    font-family: 'Times New Roman', Times, serif;
+    border: solid green;
+    text-align: center;
+    width: 100px;
+    height: 30px;
+}
