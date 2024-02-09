@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import morgan from "morgan";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+app.use(express.static(__dirname + '/public'));
 
 
 
@@ -18,7 +19,7 @@ app.post("/submit", (req,res) => {
 
 
 app.get("/", (req,res) => {
-    res.render(__dirname + "/views/login.ejs");
+    res.render(__dirname + "/views/home.ejs");
 });
 
 app.get("/about", (req,res) => {
