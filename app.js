@@ -5,9 +5,15 @@ import { fileURLToPath } from "url";
 import morgan from "morgan";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+app.use(express.static(__dirname + '/public'));
  //db.js
-
 import mongoose from "mongoose";
+const { Schema, model } = mongoose;
+
+const mailSchema = new Schema({
+  email: String,
+  password: String
+});
 
 const url = `mongodb+srv://harora1be23:2QB9BEsU3MqMNJTQ@cluster0.7wtgnye.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -38,9 +44,11 @@ app.get("/about", (req,res) => {
 
 });
 
-app.get("/login", (req,res) => {
-
+app.post("/login", (req,res) => {
+    res.render(__dirname + "/views/login.ejs");
 });
+
+
 
 app.get("/user", (req,res) => {
 
