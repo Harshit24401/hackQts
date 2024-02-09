@@ -15,6 +15,15 @@ const mailSchema = new Schema({
   password: String
 });
 
+const userSchema = new Schema({
+    type: String,
+    name: String,
+    quantity: Number
+  });
+
+const Mail = model('mail', mailSchema);
+const User = model('user', userSchema);
+
 const url = `mongodb+srv://harora1be23:2QB9BEsU3MqMNJTQ@cluster0.7wtgnye.mongodb.net/?retryWrites=true&w=majority`;
 
 
@@ -29,6 +38,7 @@ mongoose.connect(url)
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(morgan("tiny"));
+app.set('view engine', 'ejs');
 
 app.post("/submit", (req,res) => {
     console.log(req.body);
@@ -44,6 +54,27 @@ app.get("/about", (req,res) => {
 
 });
 
+app.post("/loggg", async (req,res, next) => {
+    const article = await Mail.create({
+        email: req.body["mail"],
+        password: req.body["pass"]
+      });
+      
+      console.log(article);
+     const data = await User.find().exec();
+     console.log(data);
+     res.render(__dirname + "/views/user.ejs", {data: data});
+        
+});
+
+app.get('/loggg',
+    (req, res, next) => {
+        // this route will be called at the end
+        res.send('Hello World');
+    }
+);
+
+
 app.post("/login", (req,res) => {
     res.render(__dirname + "/views/login.ejs");
 });
@@ -51,6 +82,24 @@ app.post("/login", (req,res) => {
 
 
 app.get("/user", (req,res) => {
+    res.render(__dirname + "/views/user.ejs");
+});
+
+app.post("/query", async(req,res,next) => {
+    const passArticle = {
+    type: req.body["ewaste-type"],
+    name: req.body["ewaste-name"],
+    quantity: req.body["ewaste-qty"]
+};
+    const article = await User.create({
+        type: req.body["ewaste-type"],
+        name: req.body["ewaste-name"],
+        quantity: req.body["ewaste-qty"]
+      });
+         
+      console.log(article);
+      res.render(__dirname + "/views/user.ejs", {passArticle});
+      next();
 
 });
 
