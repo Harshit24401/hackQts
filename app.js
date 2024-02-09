@@ -5,7 +5,20 @@ import { fileURLToPath } from "url";
 import morgan from "morgan";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+ //db.js
 
+import mongoose from "mongoose";
+
+const url = `mongodb+srv://harora1be23:2QB9BEsU3MqMNJTQ@cluster0.7wtgnye.mongodb.net/?retryWrites=true&w=majority`;
+
+
+mongoose.connect(url)
+    .then( () => {
+        console.log('Connected to the database ')
+    })
+    .catch( (err) => {
+        console.error(`Error connecting to the database. n${err}`);
+    })
 
 
 app.use(bodyParser.urlencoded({extended:true}));
