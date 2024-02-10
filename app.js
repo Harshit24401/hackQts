@@ -67,16 +67,15 @@ app.post("/loggg", async (req,res, next) => {
       console.log(article);
      const data = await User.find().exec();
      console.log(data);
+     if (req.body["html"]){
      res.render(__dirname + "/views/user.ejs", {data: data});
+     }else {
+        res.redirect("/vendor");
+     };
         
 });
 
-app.get('/loggg',
-    (req, res, next) => {
-        // this route will be called at the end
-        res.send('Hello World');
-    }
-);
+
 
 
 app.post("/login", (req,res) => {
