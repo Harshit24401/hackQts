@@ -10,32 +10,42 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <form class="d-flex" action="/" method="GET"></form>
+        <button class="navbar-brand" style = "padding: 0;border: none;background: none;" type="submit">
             <img src="CDwbg.png" alt="" width="30" height="24">
-          </a>
+        </button>
+        </form>
+        <!-- // style = "padding: 0;border: none;background: none;" -->
+          
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <form class="d-flex" action="/" method="GET">
+            <button class="nav-link active" style = "border: none;background: none;" aria-current="page" href="/">Home</button>
+        </form>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">About Us</a>
+            <form class="d-flex" action="/about" method="GET">
+            <button class="nav-link active" style = "border: none;background: none;" aria-current="page"  type="submit">About Us</button>
+        </form>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Our Partners</a>
+            <form class="d-flex" action="/sponsor" method="GET">
+            <button class="nav-link active" style = "border: none;background: none;" aria-current="page" href="#">Our Partners</button>
+        </form>
           </li>
           
         </ul>
         <form class="d-flex" action="/login" method="POST">
             
-            <button class="btn btn-outline-success" type="submit">Log In</button>
+            <button class="btn btn-outline-success" style = "border: none;background: none;" type="submit">Log In</button>
         </form>
         <form class="d-flex" action="/login" method="POST">
             
-            <button class="btn btn-outline-success" type="submit">Register</button>
+            <button class="btn btn-outline-success" style = "border: none;background: none;" type="submit">Register</button>
         </form>
             
       </div>

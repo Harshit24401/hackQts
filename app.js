@@ -22,16 +22,9 @@ const userSchema = new Schema({
     approved: Boolean
   });
 
-  const vendorSchema = new Schema({
-    type: String,
-    name: String,
-    quantity: Number,
-    approved: Boolean
-  });
-
 const Mail = model('mail', mailSchema);
 const User = model('user', userSchema);
-const Vendor = model('vendor', vendorSchema);
+const Vendor = model('vendor', userSchema);
 
 const url = `mongodb+srv://harora1be23:2QB9BEsU3MqMNJTQ@cluster0.7wtgnye.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -90,6 +83,23 @@ app.post("/login", (req,res) => {
     res.render(__dirname + "/views/login.ejs");
 });
 
+app.post("/approve", async(req,res) => {
+    console.log(req.body["id"]);
+    const filter = { _id : req.body["id"] };
+    const update = { approved : true};
+    var transfer = await User.findById(req.body["id"] ).exec();
+    const article = await Vendor.create({
+        type: transfer["type"],
+        name: transfer["name"],
+        quantity: transfer["quantity"],
+        approved: true
+      });
+    console.log(transfer["type"] + "meow??");
+    await User.findByIdAndDelete(req.body["id"]);
+      
+    res.redirect("/vendor");
+});
+
 
 
 app.get("/user", (req,res) => {
@@ -128,9 +138,10 @@ app.post("/submit", (req,res) => {
 });
 
 app.get("/vendor", async(req,res) => {
-    const data = await User.find().exec();
-    console.log(data);
-    res.render(__dirname + "/views/vendor.ejs", {data: data});
+    const dataU = await User.find().exec();
+    const dataV = await Vendor.find().exec();
+    
+    res.render(__dirname + "/views/vendor.ejs", {dataU: dataU, dataV: dataV});
 });
 
 app.post("/reply", async(req,res) => {
