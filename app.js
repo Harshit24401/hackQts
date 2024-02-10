@@ -60,9 +60,10 @@ app.get("/", (req,res) => {
     res.render(__dirname + "/views/home.ejs");
 });
 
-app.get("/about", (req,res) => {
-
+app.get("/sponsor", (req,res) => {
+    res.render(__dirname + "/views/sponsors.ejs")
 });
+
 
 app.post("/loggg", async (req,res, next) => {
     const article = await Mail.create({
@@ -138,7 +139,9 @@ app.post("/reply", async(req,res) => {
     res.render(__dirname + "/views/vendor.ejs", {data: data});
 });
 
-
+app.get("/about", (req,res) => {
+    res.render(__dirname + "/views/about.ejs");
+});
 
 
 
