@@ -18,11 +18,20 @@ const mailSchema = new Schema({
 const userSchema = new Schema({
     type: String,
     name: String,
-    quantity: Number
+    quantity: Number,
+    approved: Boolean
+  });
+
+  const vendorSchema = new Schema({
+    type: String,
+    name: String,
+    quantity: Number,
+    approved: Boolean
   });
 
 const Mail = model('mail', mailSchema);
 const User = model('user', userSchema);
+const Vendor = model('vendor', vendorSchema);
 
 const url = `mongodb+srv://harora1be23:2QB9BEsU3MqMNJTQ@cluster0.7wtgnye.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -47,6 +56,7 @@ app.post("/submit", (req,res) => {
 
 
 app.get("/", (req,res) => {
+//     
     res.render(__dirname + "/views/home.ejs");
 });
 
@@ -83,22 +93,31 @@ app.post("/login", (req,res) => {
 
 app.get("/user", (req,res) => {
     res.render(__dirname + "/views/user.ejs");
+    
 });
 
 app.post("/query", async(req,res,next) => {
     const passArticle = {
     type: req.body["ewaste-type"],
     name: req.body["ewaste-name"],
-    quantity: req.body["ewaste-qty"]
+    quantity: req.body["ewaste-qty"],
+    approved: false
+
 };
     const article = await User.create({
         type: req.body["ewaste-type"],
         name: req.body["ewaste-name"],
-        quantity: req.body["ewaste-qty"]
+        quantity: req.body["ewaste-qty"],
+        approved: false
       });
          
       console.log(article);
-      res.render(__dirname + "/views/user.ejs", {passArticle});
+     
+      
+      
+    const data = await User.find().exec();
+     console.log(data);
+     res.render(__dirname + "/views/user.ejs", {data: data});
       next();
 
 });
@@ -107,8 +126,16 @@ app.post("/submit", (req,res) => {
     res.sendStatus(200);
 });
 
-app.get("/vendor", (req,res) => {
+app.get("/vendor", async(req,res) => {
+    const data = await User.find().exec();
+    console.log(data);
+    res.render(__dirname + "/views/vendor.ejs", {data: data});
+});
 
+app.post("/reply", async(req,res) => {
+    const data = await User.find().exec();
+    console.log(data);
+    res.render(__dirname + "/views/vendor.ejs", {data: data});
 });
 
 

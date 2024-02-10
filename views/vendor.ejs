@@ -45,17 +45,7 @@
     <div>
 
 <div class="content-box">
-    <div class="submit-box">
-        <form action="/query" method="POST">
-            <label for="ewaste-type">Ewaste</label>
-            <input type="text" name="ewaste-type" required>
-            <label for="ewaste-name">Name</label>
-            <input type="text" name="ewaste-name" required>
-            <label for="ewaste-qty">Quantity</label>
-            <input type="text" name="ewaste-qty" required>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+   
    
     
             <table>
@@ -66,12 +56,14 @@
                         <th>Name</th>
                         <th>Quantity</th>
                         <th>Status</th>
+                        <th>Button</th>
+
                     </tr>
                 </thread>
                 <tbody>
         <% if(locals.data){ %>
          <% data.forEach(element => { %>
-            <% if(element.approved == true){var status = "Approved";} else{var status = "Pending";} %>
+            <% if(element.approved == true){var status = "Approved"; var btn = "dealt_with"} else{var status = "Pending"; var btn = "Approve"} %>
             
                         <tr>
                             <td><%= element.index %></td>
@@ -79,6 +71,7 @@
                             <td><%= element.name %></td>
                             <td><%= element.quantity%></td>
                             <td><%= status%></td>
+                            <td><button class = "btn btn-success btn-floating mx-1" type="submit" value="submit"><%= btn%></button></td>
                         </tr>
                         
                     
