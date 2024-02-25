@@ -3,6 +3,9 @@ import bodyParser from "body-parser";
 import {dirname} from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
+import axios from "axios";
+const newsPosts = [];
+const pass =  process.env.PASSWORD;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(express.static(__dirname + '/public'));
@@ -54,10 +57,6 @@ app.post("/submit", (req,res) => {
 app.get("/", (req,res) => {
 //     
     res.render(__dirname + "/views/home.ejs");
-});
-
-app.get("/sponsor", (req,res) => {
-    res.render(__dirname + "/views/sponsors.ejs")
 });
 
 
@@ -143,8 +142,8 @@ const lat = req.body["lat"];
       
       fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&apiKey=c36210eb0b124652b330c18e0613c5f5`, requestOptions)
         .then(response => response.json())
-        .then(async(result) => {var addr = result.features[0].properties.formatted;
-            const article = await User.create({
+        .then((result) => {var addr = result.features[0].properties.formatted;
+            const article =  User.create({
                 type: req.body["ewaste-type"],
                 name: req.body["ewaste-name"],
                 quantity: req.body["ewaste-qty"],
@@ -183,6 +182,41 @@ app.post("/reply", async(req,res) => {
     console.log(data);
     res.render(__dirname + "/views/vendor.ejs", {data: data});
 });
+
+app.route("/news")
+  .get(function(req, res) {
+    const params = {
+      symbols: 'AAPL', // example source
+      access_key: "7db655702b373a88ba776c95caee3579",
+      countries: "in",
+      languages: "en",
+      keywords: "Food NGOs",
+      limit: 8
+    }
+
+    if (newsPosts.length === 0) {
+      axios.get('http://api.mediastack.com/v1/news', {
+          params
+        })
+        .then(response => {
+          const apiResponse = response.data;
+          newsPosts.push(apiResponse);
+          res.redirect("/news")
+        }).catch(error => {
+          console.log(error);
+        })
+    } else{
+
+      function newsApiTimer() {
+        newsPosts.length = 0;
+          console.log("Updated");
+      }
+      setInterval(newsApiTimer, 21600000)
+      res.render(__dirname + "/views/news.ejs", {
+        newsPosts: newsPosts
+      });}
+    });
+
 
 app.get("/about", (req,res) => {
     res.render(__dirname + "/views/about.ejs");
