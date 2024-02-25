@@ -8,6 +8,20 @@
     <title>Document</title>
 </head>
 <body>
+  <script>
+    if ('geolocation' in navigator){
+      console.log('geolocation available');
+      navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = long;
+        console.log(pos);
+      });
+    }else{
+      console.log("geolocation not available")
+    }
+    </script>
     <!-- <form action="/submit" method="POST">
         <label for="email">Email</label>
         <input type="text" name="email" required>
@@ -94,6 +108,19 @@
                 placeholder="Enter a valid email address" name="mail" required />
               <label class="form-label" for="form3Example3">Email address</label>
             </div>
+
+            <div class="hidden">
+
+           
+              <input type="hidden" id="latitude" name="lat" />
+           
+
+        
+              <input type="hidden" id="longitude"  name="long" />
+           
+          </div>
+
+      
   
             <!-- Password input -->
             <div class="form-outline mb-3">
