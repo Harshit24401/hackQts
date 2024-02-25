@@ -3,7 +3,7 @@ body{
 }
 
 .button1{
-    background-color: green;
+    background-color:#6E260E;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     color: white;
@@ -13,9 +13,10 @@ body{
 }
 
 .button2{
-    background-color: white;
+    background-color: #6E260E;
     font-family: 'Times New Roman', Times, serif;
-    border: solid green;
+    border: solid white;
+    color: white;
     text-align: center;
     width: 100px;
     height: 30px;
@@ -41,15 +42,13 @@ body{
 }
 
 .para{
-    width: 30%;
+    width: 40%;
 }
 
 
 
-.introimg{
-    size: 34%;
-    opacity: 80%;
-
+.introimg img{
+    width: 50%;
 }
 
 .carddiv{
@@ -60,3 +59,6 @@ body{
     width: inherit;
     height: 20em;
 }
+
+
+
