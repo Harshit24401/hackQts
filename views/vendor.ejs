@@ -54,7 +54,7 @@
     <div>
 
 <div class="content-box">
-  <h2 style="text-align: center;">user data</h2>
+  <h2 style="text-align: center;">Queries Raised</h2>
    
    
     
@@ -62,9 +62,9 @@
                 <thread>
                     <tr>
                         <th>S.No</th>
-                        <th>Type</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
+                        <th>FoodType</th>
+                        <th>Date</th>
+                        <th>Quantity(kg)</th>
                         <th>Status</th>
                         <th>Button</th>
 
@@ -104,14 +104,15 @@
   <thread>
       <tr>
           <th>S.No</th>
-          <th>Type</th>
-          <th>Name</th>
-          <th>Quantity</th>
+          <th>Food-Type</th>
+          <th>Date</th>
+          <th>Quantity(kg)</th>
+          <th>Location</th>
           <th>Status</th>
       </tr>
   </thread>
   <tbody>
-    <div style="padding-top: 3%;"><h2 style="text-align: center;">vendor data</h2>
+    <div style="padding-top: 3%;"><h2 style="text-align: center;">Queries Answered</h2>
       <% if(locals.dataV){%>
        <% dataV.forEach(element => {   let index = dataV.indexOf(element)+1;%>
           <% if(element.approved == true){var status = "Approved";} else{var status = "Pending";} %>
@@ -121,6 +122,7 @@
                           <td><%= element.type %></td>
                           <td><%= element.name %></td>
                           <td><%= element.quantity%></td>
+                          <td><%= element.location%></td>
                           <td><%= status%></td>
                       </tr>
                       

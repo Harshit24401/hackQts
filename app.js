@@ -6,6 +6,8 @@ import morgan from "morgan";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(express.static(__dirname + '/public'));
+
+
  //db.js
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
@@ -19,6 +21,7 @@ const userSchema = new Schema({
     type: String,
     name: String,
     quantity: Number,
+    location: String,
     approved: Boolean
   });
 
@@ -63,15 +66,27 @@ app.post("/loggg", async (req,res, next) => {
         email: req.body["mail"],
         password: req.body["pass"]
       });
+
+    const lat = req.body["lat"];
+    const long = req.body["long"];
       
-      console.log(article);
+      console.log(lat, long);
+      var requestOptions = {
+        method: 'GET',
+      };
+      
+      fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&apiKey=c36210eb0b124652b330c18e0613c5f5`, requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result.features[0].properties.formatted))
+        .catch(error => console.log('error', error));
      const data = await User.find().exec();
-     console.log(data);
+     
      if (req.body["html"]){
      res.render(__dirname + "/views/user.ejs", {data: data});
      }else {
         res.redirect("/vendor");
      };
+     
         
 });
 
@@ -91,6 +106,7 @@ app.post("/approve", async(req,res) => {
         type: transfer["type"],
         name: transfer["name"],
         quantity: transfer["quantity"],
+        location: transfer["location"],
         approved: true
       });
     console.log(transfer["type"] + "meow??");
@@ -102,7 +118,9 @@ app.post("/approve", async(req,res) => {
 
 
 app.get("/user", (req,res) => {
+    
     res.render(__dirname + "/views/user.ejs");
+    
     
 });
 
@@ -114,14 +132,31 @@ app.post("/query", async(req,res,next) => {
     approved: false
 
 };
-    const article = await User.create({
-        type: req.body["ewaste-type"],
-        name: req.body["ewaste-name"],
-        quantity: req.body["ewaste-qty"],
-        approved: false
-      });
+
+const lat = req.body["lat"];
+    const long = req.body["long"];
+      
+      console.log(lat, long);
+      var requestOptions = {
+        method: 'GET',
+      };
+      
+      fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&apiKey=c36210eb0b124652b330c18e0613c5f5`, requestOptions)
+        .then(response => response.json())
+        .then(async(result) => {var addr = result.features[0].properties.formatted;
+            const article = await User.create({
+                type: req.body["ewaste-type"],
+                name: req.body["ewaste-name"],
+                quantity: req.body["ewaste-qty"],
+                location: addr,
+                approved: false
+              });
+            })
+        
+
+    
          
-      console.log(article);
+      
      
       
       
@@ -158,3 +193,4 @@ app.get("/about", (req,res) => {
 app.listen(3000, () => {
     console.log("Server started on port 3000.");
 });
+
