@@ -1,12 +1,10 @@
 body{
-    background-color:antiquewhite;
+    background-image: url("/introbg.png");
     width: 100vw;
     z-index: -1;
 }
 
 .para{
-   
-    
     margin-top: 3%;
     text-align: center;
 }
